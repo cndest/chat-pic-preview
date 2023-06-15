@@ -18,6 +18,7 @@ import com.cndest.picpreview.bean.LocalMedia;
 import com.cndest.picpreview.ui.PreviewAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * - @description:
@@ -53,7 +54,7 @@ public class PreviewFragment extends Fragment {
 
         ArrayList<LocalMedia> data = getArguments().getParcelableArrayList("data");
 
-        previewAdapter = new PreviewAdapter(data);
+        previewAdapter = newAdapter(data);
         recyclerView.setAdapter(previewAdapter);
 
 
@@ -86,6 +87,10 @@ public class PreviewFragment extends Fragment {
 
         picpBottomMenu = PicpCore.get().bottomBar();
         flParent.addView(picpBottomMenu, layoutParams);
+    }
+
+    protected PreviewAdapter newAdapter(List<LocalMedia> data){
+        return new PreviewAdapter(data);
     }
 
 

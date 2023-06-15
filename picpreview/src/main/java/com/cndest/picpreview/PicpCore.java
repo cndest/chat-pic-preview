@@ -1,8 +1,10 @@
 package com.cndest.picpreview;
 
+import android.content.Context;
 import android.view.ViewGroup;
 
 import com.cndest.picpreview.bean.LocalMedia;
+import com.cndest.picpreview.ui.PreviewAbsHolder;
 
 /**
  * - @description:
@@ -45,9 +47,20 @@ public class PicpCore {
         return picpShow.getBottomBar();
     }
 
-    public PreviewListener getPreviewListener() {
-        return previewListener;
+    public PreviewAbsHolder previewHolder(ViewGroup container,int type) {
+        if (picpShow.getPreviewHolderListener() == null) {
+            return null;
+        }
+        return picpShow.getPreviewHolderListener().newHolder(container,type);
     }
+
+    public void onViewTap(){
+        if (previewListener==null){
+            return;
+        }
+        previewListener.onViewTap();
+    }
+
 
     public void setPreviewListener(PreviewListener previewListener) {
         this.previewListener = previewListener;
@@ -68,7 +81,7 @@ public class PicpCore {
         previewActivity.finish();
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         picpShow.getTitleBar().setTitle(title);
     }
 

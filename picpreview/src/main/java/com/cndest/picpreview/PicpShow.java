@@ -19,6 +19,9 @@ public class PicpShow {
     private PicpTitle titleBar;
     private PicpBottomBar bottomBar;
     private ImageEngin imageEngin;
+
+    private PreviewHolderListener previewHolderListener;
+
     private PicpShow() {
 
     }
@@ -39,6 +42,10 @@ public class PicpShow {
         return imageEngin;
     }
 
+    public PreviewHolderListener getPreviewHolderListener() {
+        return previewHolderListener;
+    }
+
     public void start(Context context) {
         //默认值
         if (titleBar==null){
@@ -56,6 +63,7 @@ public class PicpShow {
         private PicpTitle titleBar;
         private PicpBottomBar bottomBar;
         private ImageEngin imageEngin;
+        private PreviewHolderListener previewHolderListener;
 
         public PicpBuilder setData(List<LocalMedia> showData) {
             this.showData = showData;
@@ -77,12 +85,18 @@ public class PicpShow {
             return this;
         }
 
+        public PicpBuilder setPreviewHolderListener(PreviewHolderListener previewHolderListener) {
+            this.previewHolderListener = previewHolderListener;
+            return this;
+        }
+
         public PicpShow builder() {
             PicpShow picpShow = new PicpShow();
             picpShow.showData = showData;
             picpShow.titleBar = titleBar;
             picpShow.bottomBar = bottomBar;
             picpShow.imageEngin = imageEngin;
+            picpShow.previewHolderListener = previewHolderListener;
             return picpShow;
         }
     }

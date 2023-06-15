@@ -39,6 +39,12 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
     @NonNull
     @Override
     public PreviewAbsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //先使用用户自定义的
+        PreviewAbsHolder previewAbsHolder = PicpCore.get().previewHolder(parent, viewType);
+        if (previewAbsHolder != null) {
+            return previewAbsHolder;
+        }
+
         if (viewType == PicpConstant.MimeType_Image) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pp_item_preview_image, parent, false);
             return new PreviewImageHolder(view);
@@ -52,7 +58,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PreviewAbsHolder holder, int position) {
-        holder.initView(mData.get(position), position);
+        holder.bindData(mData.get(position), position);
     }
 
     @Override

@@ -20,28 +20,22 @@ import com.cndest.picpreview.photoview.PhotoView;
 class PreviewImageHolder extends PreviewAbsHolder {
 
     private PhotoView photoView;
-    private TextView tvTest;
 
     public PreviewImageHolder(@NonNull View itemView) {
         super(itemView);
         photoView = itemView.findViewById(R.id.preview_image);
-        tvTest = itemView.findViewById(R.id.tvTest);
 
         photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
-                PicpCore.get().getPreviewListener().onViewTap();
+                PicpCore.get().onViewTap();
             }
         });
     }
 
     @Override
-    public void initView(LocalMedia localMedia,int position) {
-//        Bitmap bitmap = BitmapFactory.decodeFile(localMedia.getPath());
-//        photoView.setImageBitmap(bitmap);
+    public void bindData(LocalMedia localMedia, int position) {
         PicpCore.get().imageEngin().load(photoView.getContext(),photoView,localMedia.getPath());
-
-        tvTest.setText(position+"");
     }
 
     @Override

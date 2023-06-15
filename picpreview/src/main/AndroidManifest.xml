@@ -6,6 +6,7 @@
             android:name=".PreviewActivity"
             android:exported="false"
             android:launchMode="singleTask"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/Base.Theme.NoActionBar" />
     </application>
 

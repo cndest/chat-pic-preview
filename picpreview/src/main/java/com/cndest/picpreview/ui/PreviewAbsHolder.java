@@ -18,7 +18,7 @@ public abstract class PreviewAbsHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public abstract void initView(LocalMedia localMedia, int position);
+    public abstract void bindData(LocalMedia localMedia, int position);
 
     /**
      * 当前item的生命周期

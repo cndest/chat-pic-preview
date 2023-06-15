@@ -69,16 +69,16 @@ public class PreviewVideoHolder extends PreviewAbsHolder {
         coverImageView.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
             public void onPhotoTap(ImageView view, float x, float y) {
-                PicpCore.get().getPreviewListener().onViewTap();
+                PicpCore.get().onViewTap();
             }
         });
         videoPlayer.setOnClickListener(v->{
-            PicpCore.get().getPreviewListener().onViewTap();
+            PicpCore.get().onViewTap();
         });
     }
 
     @Override
-    public void initView(LocalMedia localMedia,int position) {
+    public void bindData(LocalMedia localMedia, int position) {
         this.media = localMedia;
         setScaleDisplaySize(localMedia);
         PicpCore.get().imageEngin().load(coverImageView.getContext(),coverImageView,localMedia.getPath());
