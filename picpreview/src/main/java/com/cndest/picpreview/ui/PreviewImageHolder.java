@@ -1,8 +1,7 @@
 package com.cndest.picpreview.ui;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -10,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.cndest.picpreview.PicpCore;
 import com.cndest.picpreview.R;
 import com.cndest.picpreview.bean.LocalMedia;
+import com.cndest.picpreview.photoview.OnPhotoTapListener;
 import com.cndest.picpreview.photoview.PhotoView;
 
 /**
@@ -26,13 +26,20 @@ class PreviewImageHolder extends PreviewAbsHolder {
         super(itemView);
         photoView = itemView.findViewById(R.id.preview_image);
         tvTest = itemView.findViewById(R.id.tvTest);
+
+        photoView.setOnPhotoTapListener(new OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(ImageView view, float x, float y) {
+                PicpCore.get().getPreviewListener().onViewTap();
+            }
+        });
     }
 
     @Override
     public void initView(LocalMedia localMedia,int position) {
 //        Bitmap bitmap = BitmapFactory.decodeFile(localMedia.getPath());
 //        photoView.setImageBitmap(bitmap);
-        PicpCore.get().getImageEngin().load(photoView.getContext(),photoView,localMedia.getPath());
+        PicpCore.get().imageEngin().load(photoView.getContext(),photoView,localMedia.getPath());
 
         tvTest.setText(position+"");
     }

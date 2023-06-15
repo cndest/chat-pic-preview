@@ -25,6 +25,14 @@ public class PreviewActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.flParent, previewFragment);
         fragmentTransaction.commit();
+
+        PicpCore.get().setPreviewActivity(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        PicpCore.get().setPreviewActivity(null);
+        super.onDestroy();
     }
 
     public static void start(Context context, List<LocalMedia> localMediaList) {

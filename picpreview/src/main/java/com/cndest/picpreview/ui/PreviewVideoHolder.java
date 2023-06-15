@@ -20,6 +20,7 @@ import com.cndest.picpreview.bean.LocalMedia;
 import com.cndest.picpreview.media.MediaPlayerEngine;
 import com.cndest.picpreview.media.MediaPlayerView;
 import com.cndest.picpreview.media.OnPlayerListener;
+import com.cndest.picpreview.photoview.OnPhotoTapListener;
 import com.cndest.picpreview.photoview.PhotoView;
 import com.cndest.picpreview.utils.DensityUtil;
 
@@ -64,13 +65,23 @@ public class PreviewVideoHolder extends PreviewAbsHolder {
         ivPlayButton.setOnClickListener(v->{
             dispatchPlay();
         });
+
+        coverImageView.setOnPhotoTapListener(new OnPhotoTapListener() {
+            @Override
+            public void onPhotoTap(ImageView view, float x, float y) {
+                PicpCore.get().getPreviewListener().onViewTap();
+            }
+        });
+        videoPlayer.setOnClickListener(v->{
+            PicpCore.get().getPreviewListener().onViewTap();
+        });
     }
 
     @Override
     public void initView(LocalMedia localMedia,int position) {
         this.media = localMedia;
         setScaleDisplaySize(localMedia);
-        PicpCore.get().getImageEngin().load(coverImageView.getContext(),coverImageView,localMedia.getPath());
+        PicpCore.get().imageEngin().load(coverImageView.getContext(),coverImageView,localMedia.getPath());
     }
 
     @Override

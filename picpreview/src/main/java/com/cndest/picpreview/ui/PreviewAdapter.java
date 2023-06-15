@@ -1,5 +1,6 @@
 package com.cndest.picpreview.ui;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,12 +8,14 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cndest.picpreview.PicpCore;
 import com.cndest.picpreview.bean.LocalMedia;
 import com.cndest.picpreview.PicpConstant;
 import com.cndest.picpreview.R;
 import com.cndest.picpreview.config.PictureMimeType;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * - @description:
@@ -21,7 +24,7 @@ import java.util.List;
  */
 public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
 
-
+    private static final String TAG = "PreviewAdapter";
     private List<LocalMedia> mData;
     private PreviewAbsHolder curHold;
 
@@ -49,7 +52,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PreviewAbsHolder holder, int position) {
-        holder.initView(mData.get(position),position);
+        holder.initView(mData.get(position), position);
     }
 
     @Override
@@ -71,12 +74,18 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
     }
 
 
-
     @Override
     public void onViewAttachedToWindow(@NonNull PreviewAbsHolder holder) {
         super.onViewAttachedToWindow(holder);
         holder.onViewAttachedToWindow();
         this.curHold = holder;
+        Log.d(TAG, "onViewAttachedToWindow: position:" + holder.getLayoutPosition());
+        //设置标题
+        int position = holder.getLayoutPosition();
+        String title = String.format(Locale.CHINA, "%d/%d", position + 1, mData.size());
+        PicpCore.get().setTitle(title);
+        //设置当前数据
+        PicpCore.get().setCurData(mData.get(position));
     }
 
     @Override
@@ -85,10 +94,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
         holder.onViewDetachedFromWindow();
     }
 
-    public void onStop(){
+    public void onStop() {
         curHold.onStop();
     }
-    public void onDestroy(){
+
+    public void onDestroy() {
         curHold.onDestroy();
     }
 }

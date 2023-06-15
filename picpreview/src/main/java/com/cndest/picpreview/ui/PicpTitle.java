@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.cndest.picpreview.PicpCore;
 import com.cndest.picpreview.R;
 
 /**
@@ -27,12 +28,23 @@ public class PicpTitle extends LinearLayout {
 
     public PicpTitle(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.pp_view_title, this, true);
+        LayoutInflater.from(context).inflate(layoutResId(), this, true);
         initView();
     }
 
-    private void initView() {
+    protected void initView() {
         ivLeft = findViewById(R.id.ivLeft);
+        ivLeft.setOnClickListener(v -> {
+            PicpCore.get().pageFinish();
+        });
         tvTitle = findViewById(R.id.tvTitle);
+    }
+
+    protected int layoutResId() {
+        return R.layout.pp_view_title;
+    }
+
+    public void setTitle(String title) {
+        tvTitle.setText(title);
     }
 }

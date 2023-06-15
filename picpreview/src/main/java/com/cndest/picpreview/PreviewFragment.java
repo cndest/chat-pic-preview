@@ -15,10 +15,7 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cndest.picpreview.bean.LocalMedia;
-import com.cndest.picpreview.ui.PicpBottomMenu;
-import com.cndest.picpreview.ui.PicpTitle;
 import com.cndest.picpreview.ui.PreviewAdapter;
-import com.cndest.picpreview.utils.DensityUtil;
 
 import java.util.ArrayList;
 
@@ -32,11 +29,13 @@ public class PreviewFragment extends Fragment {
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
     private PreviewAdapter previewAdapter;
+    private ViewGroup picpTitleImp;
+    private ViewGroup picpBottomMenu;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.pp_fragment_preview, container,false);
+        View view = inflater.inflate(R.layout.pp_fragment_preview, container, false);
         initView(view);
         FrameLayout flParent = view.findViewById(R.id.flParent);
         //add title
@@ -45,8 +44,6 @@ public class PreviewFragment extends Fragment {
         addBottomView(flParent);
         return view;
     }
-
-
 
 
     private void initView(View view) {
@@ -59,9 +56,19 @@ public class PreviewFragment extends Fragment {
         previewAdapter = new PreviewAdapter(data);
         recyclerView.setAdapter(previewAdapter);
 
+
         // 将SnapHelper attach 到RecyclerView
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+
+        PicpCore.get().setPreviewListener(new PreviewListener() {
+            @Override
+            public void onViewTap() {
+                //判断显示还是隐藏bottom
+                int visibility = picpBottomMenu.getVisibility();
+                picpBottomMenu.setVisibility(visibility == View.VISIBLE ? View.GONE : View.VISIBLE);
+            }
+        });
     }
 
     protected void addTitleView(ViewGroup flParent) {
@@ -69,15 +76,16 @@ public class PreviewFragment extends Fragment {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.TOP;
 
-        PicpTitle picpTitleImp = new PicpTitle(getContext());
-        flParent.addView(picpTitleImp,layoutParams);
+        picpTitleImp = PicpCore.get().titleBar();
+        flParent.addView(picpTitleImp, layoutParams);
     }
+
     protected void addBottomView(FrameLayout flParent) {
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.gravity = Gravity.BOTTOM;
 
-        PicpBottomMenu picpBottomMenu = new PicpBottomMenu(getContext());
-        flParent.addView(picpBottomMenu,layoutParams);
+        picpBottomMenu = PicpCore.get().bottomBar();
+        flParent.addView(picpBottomMenu, layoutParams);
     }
 
 
@@ -92,4 +100,6 @@ public class PreviewFragment extends Fragment {
         super.onDestroy();
         previewAdapter.onDestroy();
     }
+
+
 }

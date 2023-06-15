@@ -5,7 +5,8 @@
         <activity
             android:name=".PreviewActivity"
             android:exported="false"
-            android:theme="@style/Base.Theme.NoActionBar"/>
+            android:launchMode="singleTask"
+            android:theme="@style/Base.Theme.NoActionBar" />
     </application>
 
 </manifest>

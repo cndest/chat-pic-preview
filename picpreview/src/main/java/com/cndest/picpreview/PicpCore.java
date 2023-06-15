@@ -1,5 +1,9 @@
 package com.cndest.picpreview;
 
+import android.view.ViewGroup;
+
+import com.cndest.picpreview.bean.LocalMedia;
+
 /**
  * - @description:
  * - @author:  chezi008/chezi008@qq.com
@@ -7,13 +11,17 @@ package com.cndest.picpreview;
  */
 public class PicpCore {
 
-    private ImageEngin imageEngin;
+    private PicpShow picpShow;
+    private PreviewListener previewListener;
+    private PreviewActivity previewActivity;
+
+    private LocalMedia curData;
 
     private PicpCore() {
 
     }
 
-    static class PicpCoreHolder {
+    private static class PicpCoreHolder {
         private static final PicpCore instance = new PicpCore();
     }
 
@@ -21,11 +29,55 @@ public class PicpCore {
         return PicpCoreHolder.instance;
     }
 
-    public void init(ImageEngin imageEngin){
-        this.imageEngin = imageEngin;
+    public void init(PicpShow picpShow) {
+        this.picpShow = picpShow;
     }
 
-    public ImageEngin getImageEngin() {
-        return imageEngin;
+    public ImageEngin imageEngin() {
+        return picpShow.getImageEngin();
+    }
+
+    public ViewGroup titleBar() {
+        return picpShow.getTitleBar();
+    }
+
+    public ViewGroup bottomBar() {
+        return picpShow.getBottomBar();
+    }
+
+    public PreviewListener getPreviewListener() {
+        return previewListener;
+    }
+
+    public void setPreviewListener(PreviewListener previewListener) {
+        this.previewListener = previewListener;
+    }
+
+    public void setPreviewActivity(PreviewActivity previewActivity) {
+        this.previewActivity = previewActivity;
+        if (previewActivity == null) {
+            picpShow = null;
+            previewListener = null;
+        }
+    }
+
+    public void pageFinish() {
+        if (previewActivity == null) {
+            return;
+        }
+        previewActivity.finish();
+    }
+
+    public void setTitle(String title){
+        picpShow.getTitleBar().setTitle(title);
+    }
+
+
+    public LocalMedia getCurData() {
+        return curData;
+    }
+
+    public void setCurData(LocalMedia curData) {
+        this.curData = curData;
     }
 }
