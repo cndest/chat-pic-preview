@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -19,6 +20,8 @@ import com.cndest.picpreview.R;
  */
 public class PicpBottomBar extends LinearLayout {
 
+    protected ImageView ivDownload,ivShare;
+
     //动画
     private TranslateAnimation mShowActionBottom;
     private TranslateAnimation mHiddenActionBottom;
@@ -31,6 +34,12 @@ public class PicpBottomBar extends LinearLayout {
         super(context, attrs);
         LayoutInflater.from(context).inflate(R.layout.pp_view_bottom, this, true);
         initAnimation();
+        initView();
+    }
+
+    private void initView() {
+        ivDownload = findViewById(R.id.ivDownload);
+        ivShare = findViewById(R.id.ivShare);
     }
 
     /**
