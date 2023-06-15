@@ -85,8 +85,10 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
         holder.onViewDetachedFromWindow();
     }
 
-    public void onDestroy(){
-        curHold.release();
+    public void onStop(){
+        curHold.onStop();
     }
-
+    public void onDestroy(){
+        curHold.onDestroy();
+    }
 }

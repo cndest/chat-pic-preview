@@ -48,7 +48,12 @@ class PreviewImageHolder extends PreviewAbsHolder {
     }
 
     @Override
-    public void release() {
+    public void onDestroy() {
+
+    }
+
+    @Override
+    public void onStop() {
 
     }
 }

@@ -30,6 +30,7 @@ public abstract class PreviewAbsHolder extends RecyclerView.ViewHolder {
      */
     public abstract void onViewDetachedFromWindow();
 
-    public abstract void release();
+    public abstract void onDestroy();
+    public abstract void onStop();
 
 }

@@ -1,18 +1,27 @@
 package com.cndest.picpreview.ui;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
+import com.cndest.picpreview.PicpCore;
 import com.cndest.picpreview.R;
 import com.cndest.picpreview.bean.LocalMedia;
 import com.cndest.picpreview.media.MediaPlayerEngine;
 import com.cndest.picpreview.media.MediaPlayerView;
 import com.cndest.picpreview.media.OnPlayerListener;
 import com.cndest.picpreview.photoview.PhotoView;
+import com.cndest.picpreview.utils.DensityUtil;
 
 /**
  * - @description:
@@ -20,6 +29,7 @@ import com.cndest.picpreview.photoview.PhotoView;
  * - @date:  2023/6/14 11:58
  */
 public class PreviewVideoHolder extends PreviewAbsHolder {
+    private static final String TAG = "PreviewVideoHolder";
     private MediaPlayerView videoPlayer;
     private MediaPlayerEngine videoPlayerEngine;
     private ImageView ivPlayButton;
@@ -28,8 +38,18 @@ public class PreviewVideoHolder extends PreviewAbsHolder {
     private boolean isPlayed = false;
     private  LocalMedia media;
 
+    protected final int screenWidth;
+    protected final int screenHeight;
+    protected final int screenAppInHeight;
+
     public PreviewVideoHolder(@NonNull View itemView) {
         super(itemView);
+
+        this.screenWidth = DensityUtil.getRealScreenWidth(itemView.getContext());
+        this.screenHeight = DensityUtil.getScreenHeight(itemView.getContext());
+        this.screenAppInHeight = DensityUtil.getRealScreenHeight(itemView.getContext());
+
+
         videoPlayer = itemView.findViewById(R.id.mediaView);
         videoPlayerEngine = new MediaPlayerEngine();
         ivPlayButton = itemView.findViewById(R.id.ivPlay);
@@ -49,18 +69,50 @@ public class PreviewVideoHolder extends PreviewAbsHolder {
     @Override
     public void initView(LocalMedia localMedia,int position) {
         this.media = localMedia;
+        setScaleDisplaySize(localMedia);
+        PicpCore.get().getImageEngin().load(coverImageView.getContext(),coverImageView,localMedia.getPath());
     }
 
     @Override
     public void onViewAttachedToWindow() {
         videoPlayerEngine.onPlayerAttachedToWindow(videoPlayer);
+        videoPlayerEngine.addPlayListener(mPlayerListener);
     }
 
     @Override
     public void onViewDetachedFromWindow() {
         videoPlayerEngine.onPlayerDetachedFromWindow(videoPlayer);
+        videoPlayerEngine.removePlayListener(mPlayerListener);
+        playerDefaultUI();
     }
-
+    protected void setScaleDisplaySize(LocalMedia media) {
+        if (screenWidth < screenHeight) {
+            ViewGroup.LayoutParams layoutParams = videoPlayer.getLayoutParams();
+            if (layoutParams instanceof FrameLayout.LayoutParams) {
+                FrameLayout.LayoutParams playerLayoutParams = (FrameLayout.LayoutParams) layoutParams;
+                playerLayoutParams.width = screenWidth;
+                playerLayoutParams.height = screenAppInHeight;
+                Log.d(TAG, "setScaleDisplaySize: width:"+screenWidth+",height:"+screenAppInHeight);
+                playerLayoutParams.gravity = Gravity.CENTER;
+            } else if (layoutParams instanceof RelativeLayout.LayoutParams) {
+                RelativeLayout.LayoutParams playerLayoutParams = (RelativeLayout.LayoutParams) layoutParams;
+                playerLayoutParams.width = screenWidth;
+                playerLayoutParams.height = screenAppInHeight;
+                playerLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+            } else if (layoutParams instanceof LinearLayout.LayoutParams) {
+                LinearLayout.LayoutParams playerLayoutParams = (LinearLayout.LayoutParams) layoutParams;
+                playerLayoutParams.width = screenWidth;
+                playerLayoutParams.height = screenAppInHeight;
+                playerLayoutParams.gravity = Gravity.CENTER;
+            } else if (layoutParams instanceof ConstraintLayout.LayoutParams) {
+                ConstraintLayout.LayoutParams playerLayoutParams = (ConstraintLayout.LayoutParams) layoutParams;
+                playerLayoutParams.width = screenWidth;
+                playerLayoutParams.height = screenAppInHeight;
+                playerLayoutParams.topToTop = ConstraintSet.PARENT_ID;
+                playerLayoutParams.bottomToBottom = ConstraintSet.PARENT_ID;
+            }
+        }
+    }
     /**
      * 视频播放状态分发
      */
@@ -160,8 +212,13 @@ public class PreviewVideoHolder extends PreviewAbsHolder {
         }
     }
 
-    public void release() {
+    public void onDestroy() {
         videoPlayerEngine.removePlayListener(mPlayerListener);
         videoPlayerEngine.destroy(videoPlayer);
+    }
+
+    @Override
+    public void onStop() {
+        resumePausePlay();
     }
 }
