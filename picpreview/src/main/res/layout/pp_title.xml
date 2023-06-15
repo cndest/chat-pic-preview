@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingHorizontal="10dp"
-        android:src="@drawable/picp_ic_back" />
+        android:src="@drawable/pp_ic_back" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -27,6 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:src="@drawable/picp_ic_back"
+        android:src="@drawable/pp_ic_back"
         android:visibility="invisible" />
 </LinearLayout>

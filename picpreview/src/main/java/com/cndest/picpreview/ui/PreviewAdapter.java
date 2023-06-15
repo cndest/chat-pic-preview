@@ -23,6 +23,7 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
 
 
     private List<LocalMedia> mData;
+    private PreviewAbsHolder curHold;
 
     public PreviewAdapter(List<LocalMedia> mData) {
         this.mData = mData;
@@ -36,11 +37,11 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
     @Override
     public PreviewAbsHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == PicpConstant.MimeType_Image) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.picp_item_preview_image, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pp_item_preview_image, parent, false);
             return new PreviewImageHolder(view);
         }
         if (viewType == PicpConstant.MimeType_Video) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.picp_item_preview_image, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.pp_item_preview_video, parent, false);
             return new PreviewVideoHolder(view);
         }
         return null;
@@ -75,12 +76,17 @@ public class PreviewAdapter extends RecyclerView.Adapter<PreviewAbsHolder> {
     public void onViewAttachedToWindow(@NonNull PreviewAbsHolder holder) {
         super.onViewAttachedToWindow(holder);
         holder.onViewAttachedToWindow();
+        this.curHold = holder;
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull PreviewAbsHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.onViewDetachedFromWindow();
+    }
+
+    public void onDestroy(){
+        curHold.release();
     }
 
 }

@@ -3,7 +3,6 @@ package com.cndest.picpreview.ui;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,7 +28,7 @@ public abstract class PicpTitle extends LinearLayout {
 
     public PicpTitle(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        LayoutInflater.from(context).inflate(R.layout.picp_title, this, true);
+        LayoutInflater.from(context).inflate(R.layout.pp_title, this, true);
         initView();
     }
 

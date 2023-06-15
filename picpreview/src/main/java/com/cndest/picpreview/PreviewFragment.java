@@ -1,7 +1,6 @@
 package com.cndest.picpreview;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,10 +26,11 @@ public class PreviewFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private LinearLayoutManager mLayoutManager;
+    private PreviewAdapter previewAdapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.picp_fragment_preview, null);
+        View view = inflater.inflate(R.layout.pp_fragment_preview, null);
         initView(view);
         return view;
     }
@@ -43,11 +42,17 @@ public class PreviewFragment extends Fragment {
 
         ArrayList<LocalMedia> data = getArguments().getParcelableArrayList("data");
 
-        PreviewAdapter previewAdapter = new PreviewAdapter(data);
+        previewAdapter = new PreviewAdapter(data);
         recyclerView.setAdapter(previewAdapter);
 
         // 将SnapHelper attach 到RecyclerView
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        previewAdapter.onDestroy();
     }
 }

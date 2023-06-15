@@ -47,5 +47,8 @@ class PreviewImageHolder extends PreviewAbsHolder {
 
     }
 
+    @Override
+    public void release() {
 
+    }
 }
