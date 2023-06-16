@@ -20,7 +20,7 @@ allprojects {
 
 ```
 	dependencies {
-	        implementation 'com.github.cndest:chat-pic-preview:1.0.1'
+	         implementation 'com.github.cndest:chat-pic-preview:Tag'
 	}
 ```
 
