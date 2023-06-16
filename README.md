@@ -55,3 +55,10 @@ PicPreview.create(this)
 - 支持自定义标题栏
 - 支持自定义底部菜单栏
 - 支持自定义适配器预览类型视图
+
+### 3、效果
+
+| 1                                                            | 2    | 3    |
+| ------------------------------------------------------------ | ---- | ---- |
+| ![https://github.com/cndest/chat-pic-preview/blob/master/images/1.png]() |      |      |
+
