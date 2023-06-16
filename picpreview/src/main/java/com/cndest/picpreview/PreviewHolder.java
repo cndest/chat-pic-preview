@@ -1,6 +1,5 @@
 package com.cndest.picpreview;
 
-import android.content.Context;
 import android.view.ViewGroup;
 
 import com.cndest.picpreview.ui.PreviewAbsHolder;
@@ -10,7 +9,7 @@ import com.cndest.picpreview.ui.PreviewAbsHolder;
  * - @author:  chezi008/chezi008@qq.com
  * - @date:  2023/6/15 17:34
  */
-public interface PreviewHolderListener {
+public interface PreviewHolder {
 
     /**
      * @param viewType

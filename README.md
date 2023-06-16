@@ -24,5 +24,29 @@ allprojects {
 	}
 ```
 
+3. Use in code
+
+```
+PicPreview.create(this)
+                .setImageEngin((context, imageView, url) -> Glide.with(context).load(url).into(imageView))
+                .setPreviewHolder((container, viewType) -> {
+                    if (viewType == PicpConstant.MimeType_Video) {
+                        View inflate = LayoutInflater.from(container.getContext())
+                                           .inflate(R.layout.custom_item_preview_video,
+                                        container,
+                                        false);
+                        return new CustomVideoHolder(inflate);
+                    }
+                    return null;
+                })
+                .start(6,localMediaList);
+```
+
+
+
 ### 2、功能介绍
 
+- 支持预览图片和视频
+- 支持自定义标题栏
+- 支持自定义底部菜单栏
+- 支持自定义适配器预览类型视图

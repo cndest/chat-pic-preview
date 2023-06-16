@@ -1,12 +1,12 @@
 package com.cndest.picpreview;
 
 import android.content.Context;
-import android.view.ViewGroup;
 
 import com.cndest.picpreview.bean.LocalMedia;
 import com.cndest.picpreview.ui.PicpBottomBar;
 import com.cndest.picpreview.ui.PicpTitle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,17 +14,24 @@ import java.util.List;
  * - @author:  chezi008/chezi008@qq.com
  * - @date:  2023/6/15 14:59
  */
-public class PicpShow {
+public class PicPreview {
+    private Context context;
     private List<LocalMedia> showData;
+    private int curPosition;
     private PicpTitle titleBar;
     private PicpBottomBar bottomBar;
     private ImageEngin imageEngin;
 
-    private PreviewHolderListener previewHolderListener;
+    private PreviewHolder previewHolder;
 
-    private PicpShow() {
-
+    private PicPreview(Context context) {
+        this.context = context;
     }
+
+    public static PicPreview.PicpBuilder create(Context context) {
+        return new PicpBuilder(context);
+    }
+
 
     public List<LocalMedia> getShowData() {
         return showData;
@@ -42,11 +49,11 @@ public class PicpShow {
         return imageEngin;
     }
 
-    public PreviewHolderListener getPreviewHolderListener() {
-        return previewHolderListener;
+    public PreviewHolder getPreviewHolderListener() {
+        return previewHolder;
     }
 
-    public void start(Context context) {
+    public void start() {
         //默认值
         if (titleBar==null){
             titleBar = new PicpTitle(context);
@@ -55,20 +62,20 @@ public class PicpShow {
             bottomBar = new PicpBottomBar(context);
         }
         PicpCore.get().init(this);
-        PreviewActivity.start(context, showData);
+        PreviewActivity.start(context, curPosition, showData);
     }
 
     public static class PicpBuilder {
-        private List<LocalMedia> showData;
+        private Context context;
         private PicpTitle titleBar;
         private PicpBottomBar bottomBar;
         private ImageEngin imageEngin;
-        private PreviewHolderListener previewHolderListener;
+        private PreviewHolder previewHolder;
 
-        public PicpBuilder setData(List<LocalMedia> showData) {
-            this.showData = showData;
-            return this;
+        public PicpBuilder(Context context) {
+            this.context = context;
         }
+
 
         public PicpBuilder setImageEngin(ImageEngin imageEngin) {
             this.imageEngin = imageEngin;
@@ -85,19 +92,21 @@ public class PicpShow {
             return this;
         }
 
-        public PicpBuilder setPreviewHolderListener(PreviewHolderListener previewHolderListener) {
-            this.previewHolderListener = previewHolderListener;
+        public PicpBuilder setPreviewHolder(PreviewHolder previewHolder) {
+            this.previewHolder = previewHolder;
             return this;
         }
 
-        public PicpShow builder() {
-            PicpShow picpShow = new PicpShow();
-            picpShow.showData = showData;
-            picpShow.titleBar = titleBar;
-            picpShow.bottomBar = bottomBar;
-            picpShow.imageEngin = imageEngin;
-            picpShow.previewHolderListener = previewHolderListener;
-            return picpShow;
+        public void start(int currentPosition, List<LocalMedia> list) {
+            PicPreview picPreview = new PicPreview(context);
+            picPreview.showData = list;
+            picPreview.curPosition = currentPosition;
+            picPreview.titleBar = titleBar;
+            picPreview.bottomBar = bottomBar;
+            picPreview.imageEngin = imageEngin;
+            picPreview.previewHolder = previewHolder;
+            picPreview.start();
         }
+
     }
 }

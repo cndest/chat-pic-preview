@@ -35,9 +35,10 @@ public class PreviewActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public static void start(Context context, List<LocalMedia> localMediaList) {
+    public static void start(Context context, int position,List<LocalMedia> localMediaList) {
         Intent starter = new Intent(context, PreviewActivity.class);
         starter.putParcelableArrayListExtra("data", (ArrayList<? extends Parcelable>) localMediaList);
+        starter.putExtra("position",position);
         context.startActivity(starter);
     }
 }

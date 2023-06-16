@@ -1,26 +1,19 @@
 package com.cndest.demo;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.blankj.utilcode.constant.PermissionConstants;
 import com.blankj.utilcode.util.PermissionUtils;
 import com.bumptech.glide.Glide;
-import com.cndest.picpreview.ImageEngin;
 import com.cndest.picpreview.PicpConstant;
-import com.cndest.picpreview.PicpShow;
-import com.cndest.picpreview.PreviewActivity;
-import com.cndest.picpreview.PreviewHolderListener;
+import com.cndest.picpreview.PicPreview;
 import com.cndest.picpreview.bean.LocalMedia;
-import com.cndest.picpreview.ui.PreviewAbsHolder;
 
 import java.io.File;
 import java.util.Arrays;
@@ -35,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btnPreview).setOnClickListener(v->{
+        findViewById(R.id.btnPreview).setOnClickListener(v -> {
             startPreview();
         });
 
@@ -66,26 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d(TAG, "onCreate: localMediaList:" + localMediaList);
 
-
-        PicpShow builder = new PicpShow.PicpBuilder()
-                .setData(localMediaList)
-                .setImageEngin(new ImageEngin() {
-                    @Override
-                    public void load(Context context, ImageView imageView, Object url) {
-                        Glide.with(context)
-                                .load(url)
-                                .into(imageView);
+        PicPreview.create(this)
+                .setImageEngin((context, imageView, url) -> Glide.with(context).load(url).into(imageView))
+                .setPreviewHolder((container, viewType) -> {
+                    if (viewType == PicpConstant.MimeType_Video) {
+                        View inflate = LayoutInflater.from(container.getContext())
+                                                 .inflate(R.layout.custom_item_preview_video,
+                                        container,
+                                        false);
+                        return new CustomVideoHolder(inflate);
                     }
-                }).setPreviewHolderListener(new PreviewHolderListener() {
-                    @Override
-                    public PreviewAbsHolder newHolder(ViewGroup container, int viewType) {
-                        if (viewType== PicpConstant.MimeType_Video){
-                            View inflate = LayoutInflater.from(container.getContext()).inflate(R.layout.custom_item_preview_video, container,false);
-                            return new CustomVideoHolder(inflate);
-                        }
-                        return null;
-                    }
-                }).builder();
-        builder.start(this);
+                    return null;
+                })
+                .start(6,localMediaList);
     }
 }

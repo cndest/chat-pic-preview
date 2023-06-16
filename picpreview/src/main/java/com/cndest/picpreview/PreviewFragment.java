@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cndest.picpreview.bean.LocalMedia;
+import com.cndest.picpreview.ui.PicpBottomBar;
+import com.cndest.picpreview.ui.PicpTitle;
 import com.cndest.picpreview.ui.PreviewAdapter;
 
 import java.util.ArrayList;
@@ -62,6 +64,8 @@ public class PreviewFragment extends Fragment {
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(recyclerView);
 
+        int position = getArguments().getInt("position");
+        mLayoutManager.scrollToPosition(position);
         PicpCore.get().setPreviewListener(new PreviewListener() {
             @Override
             public void onViewTap() {
@@ -78,6 +82,7 @@ public class PreviewFragment extends Fragment {
         layoutParams.gravity = Gravity.TOP;
 
         picpTitleImp = PicpCore.get().titleBar();
+
         flParent.addView(picpTitleImp, layoutParams);
     }
 
@@ -86,10 +91,11 @@ public class PreviewFragment extends Fragment {
         layoutParams.gravity = Gravity.BOTTOM;
 
         picpBottomMenu = PicpCore.get().bottomBar();
+
         flParent.addView(picpBottomMenu, layoutParams);
     }
 
-    protected PreviewAdapter newAdapter(List<LocalMedia> data){
+    protected PreviewAdapter newAdapter(List<LocalMedia> data) {
         return new PreviewAdapter(data);
     }
 

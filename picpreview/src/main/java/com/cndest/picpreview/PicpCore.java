@@ -1,6 +1,5 @@
 package com.cndest.picpreview;
 
-import android.content.Context;
 import android.view.ViewGroup;
 
 import com.cndest.picpreview.bean.LocalMedia;
@@ -13,7 +12,7 @@ import com.cndest.picpreview.ui.PreviewAbsHolder;
  */
 public class PicpCore {
 
-    private PicpShow picpShow;
+    private PicPreview picPreview;
     private PreviewListener previewListener;
     private PreviewActivity previewActivity;
 
@@ -31,27 +30,27 @@ public class PicpCore {
         return PicpCoreHolder.instance;
     }
 
-    public void init(PicpShow picpShow) {
-        this.picpShow = picpShow;
+    public void init(PicPreview picPreview) {
+        this.picPreview = picPreview;
     }
 
     public ImageEngin imageEngin() {
-        return picpShow.getImageEngin();
+        return picPreview.getImageEngin();
     }
 
     public ViewGroup titleBar() {
-        return picpShow.getTitleBar();
+        return picPreview.getTitleBar();
     }
 
     public ViewGroup bottomBar() {
-        return picpShow.getBottomBar();
+        return picPreview.getBottomBar();
     }
 
     public PreviewAbsHolder previewHolder(ViewGroup container,int type) {
-        if (picpShow.getPreviewHolderListener() == null) {
+        if (picPreview.getPreviewHolderListener() == null) {
             return null;
         }
-        return picpShow.getPreviewHolderListener().newHolder(container,type);
+        return picPreview.getPreviewHolderListener().newHolder(container,type);
     }
 
     public void onViewTap(){
@@ -69,7 +68,7 @@ public class PicpCore {
     public void setPreviewActivity(PreviewActivity previewActivity) {
         this.previewActivity = previewActivity;
         if (previewActivity == null) {
-            picpShow = null;
+            picPreview = null;
             previewListener = null;
         }
     }
@@ -82,7 +81,7 @@ public class PicpCore {
     }
 
     public void setTitle(String title) {
-        picpShow.getTitleBar().setTitle(title);
+        picPreview.getTitleBar().setTitle(title);
     }
 
 
