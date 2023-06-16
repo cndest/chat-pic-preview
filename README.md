@@ -1,35 +1,40 @@
 # chat-pic-preview
-Just preivew pictrue and video in chat page for android
-
-###  1、使用
+一款针对Android平台下的图片、视频预览库，类似于聊天界面打开图片，能够左翻右翻的那种
 
 [![](https://jitpack.io/v/cndest/chat-pic-preview.svg)](https://jitpack.io/#cndest/chat-pic-preview)
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](https://github.com/cndest)
+
+[![Star](https://img.shields.io/github/stars/cndest/chat-pic-preview.svg)](https://github.com/cndest/chat-pic-preview)
+
+###  1、使用
+
 1. Add it in your root build.gradle at the end of repositories:
 
-```
+```groovy
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
+}
 ```
 
 2. Add the dependency
 
-```
-	dependencies {
-	         implementation 'com.github.cndest:chat-pic-preview:Tag'
-	}
+```groovy
+dependencies {
+	implementation 'com.github.cndest:chat-pic-preview:Tag'
+}
 ```
 
 3. Use in code
 
-```
+```java
 PicPreview.create(this)
-                .setImageEngin((context, imageView, url) -> Glide.with(context).load(url).into(imageView))
-                .setPreviewHolder((container, viewType) -> {
+           .setImageEngin((context, imageView, url) -> 	Glide.with(context)
+                          .load(url).into(imageView))
+           .setPreviewHolder((container, viewType) -> {
                     if (viewType == PicpConstant.MimeType_Video) {
                         View inflate = LayoutInflater.from(container.getContext())
                                            .inflate(R.layout.custom_item_preview_video,
@@ -39,7 +44,7 @@ PicPreview.create(this)
                     }
                     return null;
                 })
-                .start(6,localMediaList);
+            .start(6,localMediaList);
 ```
 
 
