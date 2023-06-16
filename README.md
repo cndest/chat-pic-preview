@@ -58,7 +58,7 @@ PicPreview.create(this)
 
 ### 3、效果
 
-| 1                                                            | 2    | 3    |
-| ------------------------------------------------------------ | ---- | ---- |
-| ![https://github.com/cndest/chat-pic-preview/blob/master/images/1.png]() |      |      |
+| 1                                                            | 2                                                            | 3                                                            |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![](https://github.com/cndest/chat-pic-preview/blob/master/images/1.png) | ![](https://github.com/cndest/chat-pic-preview/blob/master/images/2.png) | ![](https://github.com/cndest/chat-pic-preview/blob/master/images/3.png) |
 
