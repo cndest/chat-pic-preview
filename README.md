@@ -13,10 +13,10 @@
 
 ```groovy
 allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
 }
 ```
 
@@ -24,7 +24,7 @@ allprojects {
 
 ```groovy
 dependencies {
-	implementation 'com.github.cndest:chat-pic-preview:Tag'
+   implementation 'com.github.cndest:chat-pic-preview:Tag'
 }
 ```
 
@@ -32,22 +32,11 @@ dependencies {
 
 ```java
 PicPreview.create(this)
-           .setImageEngin((context, imageView, url) -> 	Glide.with(context)
-                          .load(url).into(imageView))
+           .setImageEngin((context, imageView, url) -> 	Glide.with(context).load(url).into(imageView))
            .setPreviewHolder((container, viewType) -> {
-                    if (viewType == PicpConstant.MimeType_Video) {
-                        View inflate = LayoutInflater.from(container.getContext())
-                                           .inflate(R.layout.custom_item_preview_video,
-                                        container,
-                                        false);
-                        return new CustomVideoHolder(inflate);
-                    }
-                    return null;
-                })
-            .start(6,localMediaList);
+                   return null})
+           .start(6,localMediaList);
 ```
-
-
 
 ### 2、功能介绍
 
