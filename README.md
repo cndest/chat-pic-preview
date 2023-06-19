@@ -1,4 +1,9 @@
-# chat-pic-preview
+## 一个有趣的想法
+
+​	你们说有没有一种可能，我们都是 start 上千项目的贡献者？咱们一起众筹一个项目（就比如这个项目），先把star给它干到上K，再把每个朋友搞成贡献者，这样你就名正言顺的是一个上K star项目的贡献者，参与了开源项目，找工作，写简历的时候是不是又有了一个装逼点？有想法的朋友可以start and fork，我会把你们提交的任何pull request都合并到主项目来，当然了，前提是别修改主要功能内容，你可以提交一些无关紧要的内容。
+
+## chat-pic-preview
+
 一款针对Android平台下的图片、视频预览库，类似于聊天界面打开图片，能够左翻右翻的那种
 
 [![](https://jitpack.io/v/cndest/chat-pic-preview.svg)](https://jitpack.io/#cndest/chat-pic-preview)
